@@ -3,14 +3,18 @@ package com.bezkoder.spring.jwt.mongodb.models;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.bezkoder.spring.jwt.mongodb.models.userType.Address;
+import com.bezkoder.spring.jwt.mongodb.models.userType.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+@Data
 @Document(collection = "users")
 public class User {
   @Id
@@ -19,6 +23,14 @@ public class User {
   @NotBlank
   @Size(max = 20)
   private String username;
+
+  private String firstName;
+  private String lastName;
+  private String phone;
+  private com.bezkoder.spring.jwt.mongodb.models.userType.PictureType picture;
+  private String gender;
+  private Address address;
+  private UserRole userRole;
 
   @NotBlank
   @Size(max = 50)
@@ -32,8 +44,7 @@ public class User {
   @DBRef
   private Set<Role> roles = new HashSet<>();
 
-  public User() {
-  }
+  public User() {}
 
   public User(String username, String email, String password) {
     this.username = username;
@@ -76,8 +87,23 @@ public class User {
   public Set<Role> getRoles() {
     return roles;
   }
-
   public void setRoles(Set<Role> roles) {
     this.roles = roles;
+  }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
   }
 }
